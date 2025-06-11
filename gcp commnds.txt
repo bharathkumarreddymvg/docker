@@ -1,0 +1,88 @@
+Here's a step-by-step explanation of the commands you’ve listed — they describe how to build a Docker image, push it to Google Container Registry (GCR), and deploy it on Google Kubernetes Engine (GKE):
+
+---
+
+### 1) `ls`
+
+* **Description:** Lists the files and directories in your current folder. Helps to confirm you have the necessary files (like Dockerfile, source code) before building the image.
+
+---
+
+### 2) `git clone <url>`
+
+* **Description:** Clones a remote Git repository to your local machine. This is usually your project source code.
+
+---
+
+### 3) `cd <dir>`
+
+* **Description:** Changes the current directory to the cloned project directory so you can work inside it.
+
+---
+
+### 4) `export PROJECT_ID=projectunique no`
+
+*(e.g., `kuberntes-46512`)*
+
+* **Description:** Sets an environment variable for your Google Cloud project ID. This makes the commands reusable and easier to manage.
+
+---
+
+### 5) `docker build -t gcr.io/${PROJECT_ID}/hiring_analytics:v1 .`
+
+* **Description:** Builds a Docker image from your current directory and tags it to match the format required by GCR (`gcr.io/<project-id>/<image-name>:<version>`).
+
+---
+
+### 6) `docker images`
+
+* **Description:** Lists all Docker images on your local machine, including the one you just built.
+
+---
+
+### 7) `gcloud auth configure-docker gcr.io`
+
+* **Description:** Configures Docker to authenticate with Google Container Registry using your Google Cloud credentials.
+
+---
+
+### 8) `docker push gcr.io/${PROJECT_ID}/hiring_analytics:v1`
+
+* **Description:** Pushes the Docker image to Google Container Registry under your project.
+
+---
+
+### 9) `gcloud container clusters create hiring-cluster --num-nodes=2`
+
+* **Description:** Creates a Kubernetes cluster named `hiring-cluster` with 2 nodes on Google Kubernetes Engine.
+
+---
+
+### 10) `kubectl create deployment hiring_analytics --image=gcr.io/${PROJECT_ID}/hiring_analytics:v1`
+
+* **Description:** Creates a Kubernetes deployment using the image from GCR. (Note: this has an underscore `_`, which is not standard and might cause issues. The next command corrects that.)
+
+---
+
+### 11) `kubectl create deployment hiring-analytics --image=gcr.io/${PROJECT_ID}/hiring_analytics:v1`
+
+* **Description:** Correctly creates a deployment with a hyphen `-` in the name (which is valid). This will manage your pods running the container.
+
+---
+
+### 12) `kubectl expose deployment hiring-analytics --type=LoadBalancer --port 80 --target-port 5000`
+
+* **Description:** Exposes the deployment to the internet by creating a LoadBalancer service. Port 80 (external) maps to port 5000 inside the container.
+
+---
+
+### 13) `kubectl get service`
+
+* **Description:** Shows the services running in your Kubernetes cluster, including their external IPs (once assigned).
+
+---
+
+### 14) `curl <external-ip>`
+
+* **Description:**Sends an HTTP request to the external IP of your service to test if it's working and accessible.
+
