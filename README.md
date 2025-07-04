@@ -60,7 +60,9 @@ This project is deployed on Google Cloud Kubernetes Engine (GKE). A LoadBalancer
 🙋‍♂️ Author
 
 Bharath Kumar📦 Docker Hub: https://hub.docker.com/repositories/bharath0011,
+
 🔗 LinkedIn: https://www.linkedin.com/in/bharath-kumar-reddy-4a5675289 
+
 📧 Email: bharath0124r@gmail.com
 
 📄 License
